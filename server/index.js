@@ -11,5 +11,4 @@ app.listen(5000,()=>{
 
 app.get('/', (req, res)=>{
     res.send(data);
-    console.log("Hell yeah!");
 })
