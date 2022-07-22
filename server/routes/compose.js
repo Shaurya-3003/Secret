@@ -23,7 +23,6 @@ compose.post('/:userId', (req, res) => {
     });
     User.findOneAndUpdate({ _id }, { $push: { posts: post } }, null, (err, user)=>{
         if(err) console.log(err);
-        else console.log(user);
     });
     post.save();
     res.send(data.postAdded)
