@@ -1,7 +1,7 @@
 import express from "express";
 import data from "./data.js";
 import cors from "cors";
-import 'dotenv/config;'
+import 'dotenv/config';
 
 const app=express();
 app.use(cors());
