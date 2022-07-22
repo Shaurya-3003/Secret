@@ -1,2 +1,2 @@
 # Secret
-A website to share your secrets anonymously  
+A website to share and view secrets anonymously  
