@@ -41,7 +41,7 @@ signup.route('/')
             }
             else{
                 passport.authenticate("local")(req, res, ()=>{
-                    res.redirect('/secrets');
+                    res.redirect(secrets);
                 })
             }
         })
