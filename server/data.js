@@ -6,6 +6,7 @@ const data={
     "success": "User's post added to list successfully",
     "loginPage": "Reached login page",
     "signupPage": "Reached signup page",
-    "secretsPage": "Reached secrets page"
+    "secretsPage": "Reached secrets page",
+    "authError": "Didn't get authenticated"
 }
 export default data;

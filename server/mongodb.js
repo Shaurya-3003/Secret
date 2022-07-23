@@ -6,13 +6,13 @@ const postSchema = {
     body: String,
     likes: Number,
     shares: Number,
-    posted: Date,
+    posted: Date
 }
 
 const userSchema = new mongoose.Schema({
     gAuth: Boolean,
-    userName: String,
-    email: String,
+    username: String,
+    profileName: String,
     password: String,
     posts: [postSchema],
     likedPosts: [String]
