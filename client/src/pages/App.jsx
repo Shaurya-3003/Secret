@@ -1,6 +1,9 @@
 // jshint: esversion6
 import React, {useState} from 'react';
 import axios from 'axios';
+import MyButton from '../components/button';
+import Form from './login';
+
 
 export default function App() {
     const server='http://127.0.0.1:5000';
@@ -16,8 +19,12 @@ export default function App() {
 
     return (
         <div>
-            <button onClick={checkConnection}>Click Me</button>
+            <button onClick={checkConnection}>Click Me to check connection</button>
             <p>{data}</p>
+            <Form route="login" text="Log In"/>
+            <Form route="signup" text="Sign Up"/>
+            <MyButton route="/login" title="Log In"/>
+            <MyButton route="/signup" title="Sign Up"/>
         </div>
     );
 }

@@ -9,16 +9,11 @@ import signup from "./routes/signup.js";
 import secrets from "./routes/secrets.js";
 import compose from "./routes/compose.js";
 
-try {
-    mongoose.connect("mongodb://localhost:27017/secretsDB");
-} catch (e) {
-    res.send(e);
-}
-
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.options('*', cors());
 
 
 app.listen(5000, () => {
@@ -30,6 +25,12 @@ app.use('/signup', signup);
 app.use('/login', login);
 app.use('/secrets', secrets);
 app.use('/compose', compose);
+
+try {
+    mongoose.connect("mongodb://localhost:27017/secretsDB");
+} catch (e) {
+    res.send(e);
+}
 
 
 

@@ -2,54 +2,53 @@ import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
 import passport from "passport";
-import passsportLocalMongoose from "passport-local-mongoose";
 import bodyParser from "body-parser";
 import { User } from "../mongodb.js";
 import data from "../data.js";
-import secrets from "./secrets.js";
 
-const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(session({
+const login = express.Router();
+login.use(bodyParser.urlencoded({ extended: false }));
+login.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 
-router.use(passport.initialize());
-router.use(passport.session());
+login.use(passport.initialize());
+login.use(passport.session());
 
 passport.use(User.createStrategy());
-passport.serializeUser(function (user, done) {
-    done(null, user._id);
+passport.serializeUser((user, done) => {
+    done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
-    User.findById(id, function (err, user) {
-        done(err, user);
-    });
+passport.deserializeUser((user, done) => {
+    done(null, user);
 });
 
 
-router.route('/')
-    .get((req, res) => res.send(data.loginPage))
+login.route('/')
+    .get((req, res) => {
+        res.send(data.loginPage);
+    })
     .post((req, res) => {
-        const email = req.body.email;
+        const username = req.body.username;
         const password = req.body.password;
         const user = new User({
-            email,
-            password,
+            username,
+            password
         });
         req.login(user, (err) => {
             if (err) {
+                console.log(err);
                 res.send(data.error);
             }
             else {
                 passport.authenticate("local")(req, res, () => {
-                    res.redirect(secrets);
+                    res.redirect("/secrets");
                 });
             }
-        })
-    })
+        });
+    });
 
-export default router;
+export default login;
