@@ -16,10 +16,11 @@ home.route('/').
         const email = req.body.email;
         const user = new User({
             gAuth,
-            userName: userName,
-            email: email,
-            password: password,
-            posts: []
+            userName,
+            email,
+            password,
+            posts: [],
+            likedPosts: []
         });
         user.save();
         res.send(data.userAdded);

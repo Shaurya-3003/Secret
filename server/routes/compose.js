@@ -13,17 +13,15 @@ compose.post('/:userId', (req, res) => {
     const body = req.body.body;
     const likes = 0;
     const shares = 0;
-    const updated = "2s ago";
+    const posted = new Date();
     const post = new Post({
         title,
         body,
         likes,
         shares,
-        updated
+        posted
     });
-    User.findOneAndUpdate({ _id }, { $push: { posts: post } }, null, (err, user)=>{
-        if(err) console.log(err);
-    });
+    User.updateOne({ _id }, { $push: { posts: post } }, null);
     post.save();
     res.send(data.postAdded)
 });
