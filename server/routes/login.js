@@ -33,9 +33,8 @@ login.route('/')
         res.send(data.loginPage);
     })
     .post((req, res) => {
-        console.log(req.body);
+        console.log(req.data, req.body);
         const {username, password}=req.body;
-        console.log(username, password)
         const user = new User({
             username,
             password

@@ -1,4 +1,4 @@
-const data={
+const data = {
     "message": "This transmission was successfull. Now ready to send and receive data.",
     "userAdded": "User added successfully",
     "postAdded": "Post added successfully",
@@ -9,4 +9,5 @@ const data={
     "secretsPage": "Reached secrets page",
     "authError": "Didn't get authenticated"
 }
+
 export default data;

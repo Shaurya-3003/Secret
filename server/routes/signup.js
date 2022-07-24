@@ -29,8 +29,8 @@ passport.deserializeUser(function (user, done) {
 signup.route('/')
     .get((req, res) => res.send(data.signupPage))
     .post((req, res) => {
-        const username = req.body.username;
-        const password = req.body.password;
+        const {username, password}=req.body;
+        console.log(username, password);
         User.register({ username }, password, (err, user) => {
             if (err) {
                 console.log(err);
