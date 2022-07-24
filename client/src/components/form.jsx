@@ -1,37 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Form(props) {
-
     const server = "http://127.0.0.1:5000";
     const url = `${server}/${props.route}`;
     const [Details, setDetails] = useState({ username: "", password: "" });
+    const navigate=useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url=`${server}/${props.route}`;
-        console.log(url, Details);
-        const response=await axios.post(url, Details);
-        console.log(response);
+        setDetails({username: "", password: ""});
+        const url = `${server}/${props.route}`;
+        try {
+            await axios.post(url, Details);
+            return navigate("/secrets");
+        } catch (error) {
+            navigate(`/${props.route}`);
+        }
     }
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const url = `${server}/${props.route}`;
-    //     console.log(url, Details);
-    //     const response=await fetch(url, {
-    //         method:'POST',
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body:JSON.stringify(Details)
-    //     });
-    //     console.log(response);
-    // }
-
-
-
-
 
     const fillDetails = () => {
         setDetails({ username: "abc@d.com", password: "comding" });
@@ -63,7 +50,7 @@ export default function Form(props) {
                     {props.text}
                 </button>
             </form>
-            <button onClick={fillDetails}>
+            <button onClick={fillDetails} id="automation">
                 Fill Details
             </button>
         </div>

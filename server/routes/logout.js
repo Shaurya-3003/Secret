@@ -1,9 +1,13 @@
 import express from 'express';
-import home from './home';
+import session from 'express-session';
+import passport from 'passport';
 
 const logout=express.Router();
 
-logout.get((req, res)=>{
-    req.logout();
-    res.redirect(home);
+logout.route('/').
+get((req, res)=>{
+    req.logout;
+    res.redirect('/');
 })
+
+export default logout;
