@@ -26,8 +26,8 @@ passport.deserializeUser((user, done)=> {
 });
 
 secrets.get('/', (req, res)=>{
-    if(req.isAuthenticated) res.send(data.secretsPage);
-    else res.send(data.authError);
+    if(req.isAuthenticated) res.status(200).send(data.secretsPage);
+    else res.status(400).send(data.authError);
 });
 
 export default secrets;

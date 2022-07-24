@@ -27,13 +27,15 @@ passport.deserializeUser((user, done) => {
 });
 
 
+
 login.route('/')
     .get((req, res) => {
         res.send(data.loginPage);
     })
     .post((req, res) => {
-        const username = req.body.username;
-        const password = req.body.password;
+        console.log(req.body);
+        const {username, password}=req.body;
+        console.log(username, password)
         const user = new User({
             username,
             password
