@@ -13,7 +13,7 @@ export default function App() {
                 <Route path='/' element={<Home/>}></Route>
                 <Route path='/login' element={<Form text="Log In" route="login"/>}></Route>
                 <Route path='/signup' element={<Form text="Sign Up" route="signup"/>}></Route>
-                <Route path='secrets' element={<SecretPage/>}></Route>
+                <Route path='/secrets' element={<SecretPage/>}></Route>
             </Routes>
         </Router>
     );

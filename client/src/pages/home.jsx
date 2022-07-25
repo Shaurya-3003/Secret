@@ -4,10 +4,10 @@ import MyButton from "../components/button";
 
 
 export default function Home() {
-    const server = 'http://127.0.0.1:5000';
     const [data, setData] = useState("Hello World");
     const checkConnection = async () => {
-        const fetchedData = await axios.get(server);
+        const base='http://127.0.0.1:5000';
+        const fetchedData = await axios.get(base);
         if (fetchedData.status !== 200) setData("Connection failed. Try again later.");
         else {
             const displayedData = fetchedData.data.message;

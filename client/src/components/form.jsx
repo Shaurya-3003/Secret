@@ -3,15 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Form(props) {
-    const server = "http://127.0.0.1:5000";
-    const url = `${server}/${props.route}`;
     const [Details, setDetails] = useState({ username: "", password: "" });
     const navigate=useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setDetails({username: "", password: ""});
-        const url = `${server}/${props.route}`;
+        const base='http://127.0.0.1:5000';
+        const url = `${base}/${props.route}`;
         try {
             await axios.post(url, Details);
             return navigate("/secrets");
@@ -28,7 +26,7 @@ export default function Form(props) {
 
         <div>
             <h1> This is the {props.text} page!!</h1>
-            <form method="POST" action={url} onSubmit={handleSubmit}>
+            <form method="POST" onSubmit={handleSubmit}>
                 <input
                     type="email"
                     name="username"
