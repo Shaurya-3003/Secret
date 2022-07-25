@@ -19,11 +19,13 @@ login.use(passport.session());
 
 passport.use(User.createStrategy());
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
 });
 
-passport.deserializeUser((user, done) => {
-    done(null, user);
+passport.deserializeUser((id, done) => {
+    User.findById(id, (err, doc)=>{
+        done(null, doc);
+    })
 });
 
 
@@ -33,7 +35,6 @@ login.route('/')
         res.send(data.loginPage);
     })
     .post((req, res) => {
-        console.log(req.data, req.body);
         const {username, password}=req.body;
         const user = new User({
             username,
@@ -45,7 +46,7 @@ login.route('/')
                 res.send(data.error);
             }
             else {
-                passport.authenticate("local")(req, res, () => {
+                passport.authenticate("local", {failureRedirect:'/login'})(req, res, () => {
                     res.redirect("/secrets");
                 });
             }
