@@ -12,8 +12,8 @@ const login = express.Router();
 login.use(bodyParser.urlencoded({ extended: true }));
 login.use(session({
     secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
 }));
 
 login.use(cookieParser(process.env.SECRET));
@@ -36,30 +36,16 @@ passport.deserializeUser((id, done) => {
 
 login.route('/')
     .get((req, res) => {
-        res.send(data.loginPage);
+        console.log(req.isAuthenticated());
+        if(req.isAuthenticated()){
+            const obj = {
+                'user': req.user,
+                'posts': posts
+            }
+            res.send(JSON.stringify(obj));
+        }
+        else res.status(401).json({'error': 'Request is unAuthenticated'});
     })
-    // .post((req, res) => {
-    //     console.log("Front page req", req.headers);
-    //     const {username, password}=req.body;
-    //     const user = new User({
-    //         username,
-    //         password
-    //     });
-    //     req.login(user, (err) => {
-    //         console.log("Log 1", user);
-    //         if (err) {
-    //             res.status(401).json({'error': 'Unauthorized'});
-    //         }
-    //         else {
-    //             console.log("Log 2", user);
-    //             passport.authenticate("local")(req, res, function(){
-    //                 console.log("Cookie log", req.headers, res.header.cookie);
-    //                 res.redirect("/secrets");
-    //             });
-    //         }
-    //         console.log("Log 3", user);
-    //     });
-    // });
     .post((req, res, next) => {
         passport.authenticate("local", { failureRedirect: '/login' }, (err, user) => {
             if (err) res.status(401).json({ 'error': 'unauthorized' });
@@ -71,7 +57,6 @@ login.route('/')
                             'user': req.user,
                             'posts': posts
                         }
-                        console.log(obj.user, obj.posts);
                         res.send(JSON.stringify(obj));
                     }
                 })

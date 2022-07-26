@@ -12,8 +12,8 @@ const signup = express.Router();
 signup.use(bodyParser.urlencoded({ extended: true }));
 signup.use(session({
     secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
 }));
 signup.use(passport.initialize());
 signup.use(passport.session());
@@ -45,7 +45,6 @@ signup.route('/')
                         'user': req.user,
                         'posts': posts
                     }
-                    console.log(obj.user, obj.posts);
                     res.send(JSON.stringify(obj));
                 })
             }

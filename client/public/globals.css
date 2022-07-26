@@ -15,3 +15,7 @@ input{
 .hidden{
     display: none;
 }
+
+#automation{
+    margin-top: 30px;
+}
