@@ -6,6 +6,7 @@ import passsportLocalMongoose from "passport-local-mongoose";
 import bodyParser from "body-parser";
 import { User } from "../mongodb.js";
 import data from "../data.js";
+import posts from "../posts.js";
 
 const signup = express.Router();
 signup.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +25,7 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (id, done) {
     User.findById(id, (err, doc)=>{
-        done(null, doc);
+        done(err, doc);
     })
 });
 
@@ -34,12 +35,18 @@ signup.route('/')
         const {username, password}=req.body;
         User.register({ username }, password, (err, user) => {
             if (err) {
-                console.log(err);
+                console.log(err, user);
                 res.redirect('/');
             }
             else {
                 passport.authenticate("local")(req, res, () => {
-                    res.redirect("/secrets");
+                    console.log(req.user);
+                    const obj = {
+                        'user': req.user,
+                        'posts': posts
+                    }
+                    console.log(obj.user, obj.posts);
+                    res.send(JSON.stringify(obj));
                 })
             }
         })

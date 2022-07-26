@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../utils/UserContext";
 
 export default function Form(props) {
     const [Details, setDetails] = useState({ username: "", password: "" });
+    const [data, setData]=useContext(UserContext);
     const navigate=useNavigate();
 
     const handleSubmit = async (e) => {
@@ -11,9 +13,18 @@ export default function Form(props) {
         const base='http://127.0.0.1:5000';
         const url = `${base}/${props.route}`;
         try {
-            await axios.post(url, Details);
-            return navigate("/secrets");
+            const res=await axios.post(url, Details, {
+                withCredentials: true
+            });
+            setData({
+                'user' : res.data.user,
+                'posts' : res.data.posts
+            });
+            navigate("/secrets");
         } catch (error) {
+            console.log(error);
+            setDetails({username:'', password:''});
+            setData(null);
             navigate(`/${props.route}`);
         }
     }
