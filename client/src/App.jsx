@@ -4,6 +4,7 @@ import Home from './pages/home';
 import LoginForm from './pages/login';
 import SignupPage from './pages/signup';
 import SecretPage from './pages/secrets';
+import Compose from './pages/compose';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserContext } from './utils/UserContext';
 
@@ -27,6 +28,7 @@ export default function App() {
                     <Route path='/login' element={<LoginForm/>}></Route>
                     <Route path='/signup' element={<SignupPage />}></Route>
                     <Route path='/secrets' element={<SecretPage />} ></Route>
+                    <Route path='/compose' element={<Compose />}></Route>
                 </Routes>
             </UserContext.Provider>
         </Router>

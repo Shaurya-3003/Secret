@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import home from "./routes/home.js";
 import login from "./routes/login.js";
 import signup from "./routes/signup.js";
+import session from "express-session";
 // import secrets from "./routes/secrets.js";
 import compose from "./routes/compose.js";
 import logout from "./routes/logout.js";
@@ -15,8 +16,13 @@ import logout from "./routes/logout.js";
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: true,
+}));
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://127.0.0.1:3000',
     credentials: true
 }));
 app.use(cookieParser(process.env.SECRET));

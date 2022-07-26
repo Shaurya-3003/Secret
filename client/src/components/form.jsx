@@ -5,25 +5,27 @@ import { UserContext } from "../utils/UserContext";
 
 export default function Form(props) {
     const [Details, setDetails] = useState({ username: "", password: "" });
-    const [data, setData]=useContext(UserContext);
-    const navigate=useNavigate();
+    const [data, setData] = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const base = 'http://127.0.0.1:5000';
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const base='http://127.0.0.1:5000';
         const url = `${base}/${props.route}`;
         try {
-            const res=await axios.post(url, Details, {
+            const res = await axios.post(url, Details, {
                 withCredentials: true
             });
             setData({
-                'user' : res.data.user,
-                'posts' : res.data.posts
+                'user': res.data.user,
+                'posts': res.data.posts
             });
-            navigate("/secrets");
+            navigate('/secrets');
         } catch (error) {
             console.log(error);
-            setDetails({username:'', password:''});
+            setDetails({ username: '', password: '' });
             setData(null);
             navigate(`/${props.route}`);
         }
@@ -32,6 +34,7 @@ export default function Form(props) {
     const fillDetails = () => {
         setDetails({ username: "abc@d.com", password: "comding" });
     }
+
 
     return (
 
