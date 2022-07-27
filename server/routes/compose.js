@@ -34,10 +34,8 @@ passport.deserializeUser((id, done) => {
 
 
 compose.post('/:id', (req, res) => {
-    console.log(req.isAuthenticated);
     if (req.isAuthenticated) {
         const id=req.params.id;
-        console.log(id, req.user);
         const title = req.body.title;
         const body = req.body.body;
         const likes = 0;
@@ -52,7 +50,6 @@ compose.post('/:id', (req, res) => {
         });
         User.updateOne({ _id:id }, { $push: { posts: post } }, (err, user)=>{
             if(err) console.log(err)
-            else console.log("Successfully updated user with id", id);
         });
         post.save();
         res.send(data.postAdded)

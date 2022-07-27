@@ -7,10 +7,12 @@ import cookieParser from "cookie-parser";
 import home from "./routes/home.js";
 import login from "./routes/login.js";
 import signup from "./routes/signup.js";
-import session from "express-session";
-// import secrets from "./routes/secrets.js";
 import compose from "./routes/compose.js";
 import logout from "./routes/logout.js";
+import posts from "./routes/posts.js"
+import session from "express-session";
+
+
 
 
 const app = express();
@@ -38,6 +40,7 @@ app.use('/login', login);
 // app.use('/secrets', secrets);
 app.use('/compose', compose);
 app.use('/logout', logout);
+app.use('/posts', posts)
 
 try {
     mongoose.connect("mongodb://localhost:27017/secretsDB");
