@@ -4,7 +4,9 @@ import Home from './pages/home';
 import LoginForm from './pages/login';
 import SignupPage from './pages/signup';
 import SecretPage from './pages/secrets';
+import MySecrets from './pages/viewsecrets';
 import Compose from './pages/compose';
+import SharedSecret from './pages/sharedsecret';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserContext } from './utils/UserContext';
 
@@ -29,6 +31,8 @@ export default function App() {
                     <Route path='/signup' element={<SignupPage />}></Route>
                     <Route path='/secrets' element={<SecretPage />} ></Route>
                     <Route path='/compose' element={<Compose />}></Route>
+                    <Route path='/viewsecrets' element={<MySecrets/>}></Route>
+                    <Route path='/shared/:postid' element={<SharedSecret/>}></Route>
                 </Routes>
             </UserContext.Provider>
         </Router>

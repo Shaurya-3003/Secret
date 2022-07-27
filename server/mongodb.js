@@ -5,7 +5,6 @@ const postSchema = {
     title: String,
     body: String,
     likes: Number,
-    shares: Number,
     posted: Date
 }
 
@@ -15,7 +14,7 @@ const userSchema = new mongoose.Schema({
     profileName: String,
     password: String,
     posts: [postSchema],
-    likedPosts: [String]
+    likedPosts: [postSchema]
 });
 
 userSchema.plugin(passportLocalMongoose);

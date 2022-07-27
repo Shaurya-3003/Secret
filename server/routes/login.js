@@ -3,10 +3,8 @@ import session from "express-session";
 import mongoose from "mongoose";
 import passport from "passport";
 import bodyParser from "body-parser";
-import { User } from "../mongodb.js";
-import data from "../data.js";
+import { User, Post } from "../mongodb.js";
 import cookieParser from "cookie-parser";
-import posts from "../posts.js";
 
 const login = express.Router();
 login.use(bodyParser.urlencoded({ extended: true }));
@@ -35,33 +33,35 @@ passport.deserializeUser((id, done) => {
 
 
 login.route('/')
-    .get((req, res) => {
-        console.log(req.isAuthenticated());
+    .get(async (req, res) => {
         if(req.isAuthenticated()){
+            const allPosts=await Post.find();
             const obj = {
                 'user': req.user,
-                'posts': posts
+                'posts': allPosts
             }
             res.send(JSON.stringify(obj));
         }
         else res.status(401).json({'error': 'Request is unAuthenticated'});
     })
     .post((req, res, next) => {
-        passport.authenticate("local", { failureRedirect: '/login' }, (err, user) => {
+        
+        passport.authenticate("local", { failureRedirect: '/login' }, async (err, user) => {
             if (err) res.status(401).json({ 'error': 'unauthorized' });
             else {
+                const allPosts=await Post.find();
                 req.logIn(user, (err) => {
                     if (err) res.status(401).json({ 'error': 'unauthorized' });
                     else {
                         const obj = {
                             'user': req.user,
-                            'posts': posts
+                            'posts': allPosts
                         }
                         res.send(JSON.stringify(obj));
                     }
                 })
             }
         })(req, res, next);
-    })
+    });
 
 export default login;

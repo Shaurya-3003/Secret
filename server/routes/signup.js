@@ -4,9 +4,8 @@ import mongoose from "mongoose";
 import passport from "passport";
 import passsportLocalMongoose from "passport-local-mongoose";
 import bodyParser from "body-parser";
-import { User } from "../mongodb.js";
+import { User, Post } from "../mongodb.js";
 import data from "../data.js";
-import posts from "../posts.js";
 
 const signup = express.Router();
 signup.use(bodyParser.urlencoded({ extended: true }));
@@ -39,11 +38,11 @@ signup.route('/')
                 res.redirect('/');
             }
             else {
-                passport.authenticate("local")(req, res, () => {
-                    console.log(req.user);
+                passport.authenticate("local")(req, res, async() => {
+                    const allPosts=await Post.find();
                     const obj = {
                         'user': req.user,
-                        'posts': posts
+                        'posts': allPosts
                     }
                     res.send(JSON.stringify(obj));
                 })

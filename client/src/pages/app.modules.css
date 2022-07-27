@@ -6,3 +6,13 @@ input{
     display: block;
     margin-left: 0;
 }
+
+.card{
+    display: inline-block;
+    border: 1px black solid;
+    border-radius: 10%;
+    margin: 50px;
+    padding: 8px;
+    width: 240px;
+    height: 240px;
+}
