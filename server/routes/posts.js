@@ -55,13 +55,14 @@ posts.route('/')
             const { method, postid } = req.body;
             let post, dbRes, personalres;
             console.log(req.user);
-            switch (method) {
+            switch (method) { //every post is stored in 4 places->posts, user.posts, user.likedposts, users.likedposts. Update must occur everywhere.  Use reference to post in update
                 case "like":
                     console.log("Like method was called");
-                    const likeUpdate = await Post.updateOne({ _id: postid }, { $inc: { likes: 1 } }); // increase like count in posts collections
+                    const likeUpdate = await Post.updateOne({ _id: postid }, { $inc: { likes: 1 } }); // Update 1
                     post = await Post.findOne({ _id: postid });
-                    dbRes = await User.updateOne({ _id: req.user._id }, { $push: { likedPosts: post } }); //adds post in likedPosts collections
-                    personalres = await User.updateOne({ 'posts._id': postid }, { $inc: { "posts.$.likes": 1 } }); //increases like count in user posts collection
+                    dbRes = await User.updateOne({ _id: req.user._id }, { $push: { likedPosts: post } }); // Update 2
+                    personalres = await User.updateOne({ 'posts._id': postid }, { $inc: { "posts.$.likes": 1 } }); //Update 3
+                    const likedPost= await User.updateMany({'likedPosts._id': postid}, {$inc:{"$likedPosts.$likes": 1}}); // Update 4
                     console.log(likeUpdate, post, dbRes, personalres);
                     res.status(200).json({ 'success': "Post liked successfully" });
                     break;
@@ -71,6 +72,7 @@ posts.route('/')
                     post = await Post.findOne({ _id: postid });
                     dbRes = await User.updateOne({ _id: req.user._id }, { $pull: { likedPosts: { _id: postid } } });
                     personalres = await User.updateOne({ 'posts._id': postid }, { $inc: { "posts.$.likes": -1 } });
+                    const unLikedPost= await User.updateMany({'likedPosts._id': postid}, {$inc:{"$likedPosts.$.likes": -1}})
                     console.log(unLikeUpdate, post, dbRes, personalres);
                     res.status(200).json({ 'success': "Post unliked successfully" });
                     break;
