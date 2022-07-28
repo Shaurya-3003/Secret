@@ -39,28 +39,34 @@ export default function Form(props) {
     return (
 
         <div>
-            <h1> This is the {props.text} page!!</h1>
+            <h1> {props.title} </h1>
             <form method="POST" onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    name="username"
-                    placeholder="Enter e-mail"
-                    value={Details.username}
-                    onChange={(e) => setDetails({ ...Details, username: e.target.value })}
-                    id="email">
-                </input>
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    value={Details.password}
-                    onChange={(e) => setDetails({ ...Details, password: e.target.value })}
-                    id="password">
-                </input>
-                <button
-                    type="submit">
-                    {props.text}
-                </button>
+                <p>
+                    <input
+                        type="email"
+                        name="username"
+                        placeholder="Enter e-mail"
+                        value={Details.username}
+                        onChange={(e) => setDetails({ ...Details, username: e.target.value })}
+                        id="email">
+                    </input>
+                </p>
+                <p>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        value={Details.password}
+                        onChange={(e) => setDetails({ ...Details, password: e.target.value })}
+                        id="password">
+                    </input>
+                </p>
+                <p>
+                    <button
+                        type="submit">
+                        {props.text}
+                    </button>
+                </p>
             </form>
             <button onClick={fillDetails} id="automation">
                 Fill Details

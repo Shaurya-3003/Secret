@@ -1,10 +1,15 @@
 import React from "react";
 import Form from "../components/form";
+import InitNav from "../components/navLanding";
+import style from "../css-modules/landing.module.css"
 
-export default function LoginForm(){
-    return(
-        <div>
-            <Form text="Log In" route="login"/>
+export default function LoginForm() {
+    return (
+        <div className={style.loginpg}>
+            <InitNav />
+            <div className={style.content}>
+                <Form text="Log In" route="login" title="LOGIN" />
+            </div>
         </div>
-    ) 
+    )
 }
