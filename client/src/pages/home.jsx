@@ -1,25 +1,37 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import MyButton from "../components/button";
+import InitNav from "../components/navLanding";
+import style from "../css-modules/landing.module.css"
+import gif from "../images/landing.gif"
+
+
 
 
 export default function Home() {
-    const [data, setData] = useState("Hello World");
-    const checkConnection = async () => {
-        const base='http://127.0.0.1:5000';
-        const fetchedData = await axios.get(base);
-        if (fetchedData.status !== 200) setData("Connection failed. Try again later.");
-        else {
-            const displayedData = fetchedData.data.message;
-            setData(displayedData);
-        }
-    }
+    useEffect(() => {
+        document.title = "Name"
+    });
     return (
-        <div>
-            <button onClick={checkConnection}>Click Me to check connection</button>
-            <p>{data}</p>
-            <MyButton route="/login" title="Log In" />
-            <MyButton route="/signup" title="Sign Up" />
+        <div className={style.homepg}>
+            <InitNav />
+            <div className={style.content}>
+                <h1>
+                    INFORMATION FROM HERE ON IS<br />
+                    <span className={style.flash}> CLASSIFIED</span>
+                </h1>
+            </div>
+            <div className={style.content}>
+                <h3>
+                    Name is a safe space to share your secrets. Your identity remains protected <br /> and you can reveal secrets that wouldn't normally.
+                </h3>
+            </div>
+            <div className={style.content}>
+                <img alt="Landing GIF" src={gif} />
+            </div>
+            <div className={`${style.content} ${style.margin}`}>
+                <MyButton route="/login" title="Log In" className={style.homebtn} />
+                <MyButton route="/signup" title="Sign Up" className={style.homebtn} />
+            </div>
         </div>
     )
 

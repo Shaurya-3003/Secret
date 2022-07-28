@@ -1,0 +1,66 @@
+.homepg {
+    height: 100%;
+    width: 100vw;
+    background-image: linear-gradient(to right, #101010 0%, #1f2123 100%);
+}
+
+.loginpg{
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(to right, #101010 0%, #1f2123 100%);
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #fdfdfd;
+}
+
+.btncolor{
+    color: #fdfdfd;
+}
+
+.flash {
+    color: red;
+}
+
+.margin{
+    margin-top: 5vh
+}
+
+img{
+    margin-left: 2vw ;
+}
+
+.link{
+    text-decoration: none;
+    color: #fdfdfd;
+}
+
+.card{
+    display: inline-block;
+    border: 1px black solid;
+    border-radius: 10%;
+    margin: 50px;
+    padding: 8px;
+    width: 240px;
+    height: 240px;
+    color: black;
+}
+
+.card p{
+    color: #101010;
+}
