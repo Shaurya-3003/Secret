@@ -14,11 +14,11 @@ export default function Card(props){
             <p>{props.body}</p>
             <p>Likes: {props.likes}</p>
             <p>
-            {props.toggleLike && <button onClick={()=>props.toggleLike(props.id)}>Like</button>}
-            <button onClick={()=>props.toggleShare(props.id)}>Share</button>
+            {props.toggleLike && <button onClick={()=>props.toggleLike(props.id)} className="btn">Like</button>}
+            <button onClick={()=>props.toggleShare(props.id)} className="btn">Share</button>
+            {props.delete && <button onClick={()=>props.handleDelete(props.id)} className="btn">Delete</button>}
             </p>
             <p>Posted: {timeago}</p>
-            {props.delete && <button onClick={()=>props.handleDelete(props.id)}>{props.delete}</button>}
         </div>
     ) 
 }

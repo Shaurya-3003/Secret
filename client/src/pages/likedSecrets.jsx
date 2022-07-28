@@ -1,13 +1,12 @@
-// jshint:esversion6
-
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import base64 from "base-64";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import Card from "../components/card";
 
-export default function SecretPage() {
+
+export default function LikedSecrets() {
+
     const url = 'http://127.0.0.1:5000'
     const navigate = useNavigate();
     const [data, setData] = useContext(UserContext);
@@ -26,8 +25,9 @@ export default function SecretPage() {
     };
 
     useEffect(() => {
+        console.log("use effect was called");
         fetch();
-    });
+    }, []);
 
     const handleLogout = async () => {
         await axios.get(`${url}/logout`, {
@@ -36,7 +36,22 @@ export default function SecretPage() {
         navigate('/');
     }
 
+    const handleDelete = async (postKey) => {
+        const res = await axios.post(`${url}/posts/delete`, { postid: postKey }, {
+            withCredentials: true
+        });
+        if (res.status === 200) {
+            alert("Your post has been deleted");
+            navigate(-1);
+        }
+        else {
+            alert("There seems to be a problem");
+            navigate(0);
+        }
+    };
+
     const toggleLike = async (postid) => {
+        console.log(data.user.likedPosts);
         const liked = data.user.likedPosts.find(post => post._id === postid);
         console.log("toggleLike called");
         if (liked) {
@@ -74,33 +89,34 @@ export default function SecretPage() {
     }
 
     const toggleShare = (id) => {
-        const postid=base64.encode(id);
+        const postid=Buffer.from(id, 'base64');
         const shareLink=`http://127.0.0.1:3000/shared/${postid}`;
         navigator.clipboard.writeText(shareLink);
+        navigate(shareLink);
     }
 
     return (
         <div>
-            {data.user && <p> Reached Secrets Page of {data.user.username}</p>}
+            {data.user && <p> Reached Liked Secrets Page of {data.user.username}</p>}
             {data.posts &&
-                data.posts.map((post, index) => {
+                data.user.likedPosts.map((post) => {
                     return <Card
-                        key={index}
+                        key={post._id}
                         id={post._id}
                         title={post.title}
                         body={post.body}
                         likes={post.likes}
                         shares={post.shares}
                         time={post.posted}
+                        delete={data.user.posts.find(likedPost=>likedPost._id===post._id) && "delete"}
+                        handleDelete={handleDelete}
                         toggleLike={toggleLike}
-                        toggleShare={toggleShare} />
+                        toggleShare={toggleShare}
+                    />
                 })
             }
             <button onClick={() => navigate('/compose')} className="btn">Compose</button>
             <button onClick={handleLogout} className="btn">Log Out</button>
-            <button onClick={() => navigate('/viewsecrets')} className="btn"> View your Secrets</button>
-            <button onClick={()=> navigate('/liked')} className="btn"> View liked Secrets</button>
         </div>
     )
 }
-

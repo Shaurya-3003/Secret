@@ -9,6 +9,7 @@ import Compose from './pages/compose';
 import SharedSecret from './pages/sharedsecret';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserContext } from './utils/UserContext';
+import LikedSecrets from './pages/likedSecrets';
 
 
 
@@ -33,6 +34,7 @@ export default function App() {
                     <Route path='/compose' element={<Compose />}></Route>
                     <Route path='/viewsecrets' element={<MySecrets/>}></Route>
                     <Route path='/shared/:postid' element={<SharedSecret/>}></Route>
+                    <Route path='/liked' element={<LikedSecrets/>}></Route>
                 </Routes>
             </UserContext.Provider>
         </Router>
